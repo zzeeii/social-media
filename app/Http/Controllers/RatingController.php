@@ -20,7 +20,14 @@ class RatingController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validateData = $request->validate([
+            'user_id' => 'required|exists:users,id',
+            'movie_id' => 'required|exists:movies,id',
+            'rate' => 'required|int',
+            'review' => 'required|string',
+        ]);
+        $move = Rating::create($validateData);
+        return response()->json($move, 201);
     }
 
     /**
